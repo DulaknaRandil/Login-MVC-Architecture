@@ -1,0 +1,57 @@
+﻿@model Login.Models.user
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-3xl font-bold mb-4 text-center">Login</h2>
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "max-w-md mx-auto" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="bg-gradient-to-br from-green-400 to-blue-500 rounded-lg shadow-xl p-8 mb-4">
+        @Html.ValidationSummary(true, "", new { @class = "text-red-500 text-sm mb-4" })
+
+        <div class="mb-4">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "block text-white text-sm font-semibold mb-2" })
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "bg-gray-200 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" } })
+        </div>
+
+        <div class="mb-4 relative">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "block text-white text-sm font-semibold mb-2" })
+            <div class="relative">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "bg-gray-200 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline", type = "password", id = "passwordField" } })
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white cursor-pointer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="togglePassword">
+                        <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"></path>
+                        <line x1="1" y1="1" x2="23" y2="23" style="display: none;" id="cutLine"></line>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <input type="submit" value="Login" class="bg-white text-green-500 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline hover:bg-green-600 hover:text-white cursor-pointer">
+        </div>
+    </div>
+}
+
+<script>
+    // JavaScript to toggle password visibility
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        const passwordField = document.getElementById("passwordField");
+        const cutLine = document.getElementById("cutLine");
+        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+        passwordField.setAttribute("type", type);
+        cutLine.style.display = type === "password" ? "block" : "none";
+    });
+</script>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="~/Content/Site.css" rel="stylesheet">
